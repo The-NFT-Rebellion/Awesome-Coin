@@ -12,7 +12,7 @@ impl Default for VFT {
     fn default() -> VFT {
         VFT {
             display_name: String::from("Boring default name"),
-            id: String::from("default_name"),
+            id: String::from("default_id"),
             image_path: String::from("boring_default_image_path.png"),
             crypto_cost: 100.1
         }
@@ -103,7 +103,7 @@ fn query_data() {
                     if vft.id == user_query[1] {
                         success = true;
                         println!("\n-------------------------------------------------------------");
-                        println!("Root Folder:{} | {:#?}", folder.name, vft);
+                        println!("RootFolder:   \"{}\" \nDisplayName:  \"{}\" \nID:           \"{}\" \nImagePath:    \"{}\" \nCryptoCost:   \"{}\"", folder.name, vft.display_name, vft.id, vft.image_path, vft.crypto_cost);
                     }
                 }
             }
@@ -114,6 +114,13 @@ fn query_data() {
                 println!("-------------------------------------------------------------\n");
                 println!("Query successful: VFT/{}", user_query[1]);
             }
+        }
+        "all" => {
+            println!("Querying all Blockchain data");
+            println!("-------------------------------------------------------------");
+            println!("{:#?}", get_blockchain());
+            println!("-------------------------------------------------------------");
+            println!("Query successful");
         }
         _ => println!("Invalid query")
     }
