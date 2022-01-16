@@ -1,6 +1,9 @@
+use std::io;
+
 #[derive(Debug)]
 struct VFT {
-    name: String,
+    display_name: String,
+    id: String,
     image_path: String,
     crypto_cost: f32
 }
@@ -8,7 +11,8 @@ struct VFT {
 impl Default for VFT {
     fn default() -> VFT {
         VFT {
-            name: String::from("Boring default name"),
+            display_name: String::from("Boring default name"),
+            id: String::from("default_name"),
             image_path: String::from("boring_default_image_path.png"),
             crypto_cost: 100.1
         }
@@ -26,7 +30,7 @@ struct Blockchain { // TODO: Think of better name for this
     folders: Vec<Folder>
 }
 
-fn main() {
+fn get_blockchain() -> Blockchain {
     // TODO: Change to Blockchain new name
     let blockchain : Blockchain = Blockchain {
         folders: vec![
@@ -34,7 +38,8 @@ fn main() {
                 name: String::from("wa"),
                 vfts: vec![
                     VFT {
-                        name: String::from("Test VFT"),
+                        display_name: String::from("Test VFT"),
+                        id: String::from("test_vft"),
                         image_path: String::from("test.png"),
                         crypto_cost: 20.1
                     },
@@ -53,8 +58,71 @@ fn main() {
             }
         ]
     };
-    
-    //println!("Printing entire Blockchain for debugging purposes:\n{:#?}", blockchain)
 
-    
+    return blockchain
+}
+
+fn query_data() {
+    println!("\nWhat data would you like to query?");
+    let mut input = String::new();
+    match io::stdin().read_line(&mut input) {
+        Ok(_) => {},
+        Err(_) => {},
+    }
+    let input = input.trim();
+
+    let user_query: Vec<&str> = input.split(" ").collect();
+
+    //println!("{}", input)
+    match user_query[0] {
+        "folder" => {
+            println!("Querying folder: {}", user_query[1]);
+            
+            let mut success = false;
+            for folder in get_blockchain().folders {
+                if folder.name == user_query[1] {
+                    success = true;
+                    println!("\n-------------------------------------------------------------");
+                    println!("{:#?}", folder);
+                }
+            }
+
+            if success == false {
+                println!("Folder Query failed")
+            } else {
+                println!("-------------------------------------------------------------\n");
+                println!("Query successful: folder/{}", user_query[1]);
+            }
+        }
+        "vft" => {
+            println!("Querying VFT: {}", user_query[1]);
+
+            let mut success = false;
+            for folder in get_blockchain().folders {
+                for vft in folder.vfts {
+                    if vft.id == user_query[1] {
+                        success = true;
+                        println!("\n-------------------------------------------------------------");
+                        println!("Root Folder:{} | {:#?}", folder.name, vft);
+                    }
+                }
+            }
+
+            if success == false {
+                println!("VFT Query failed")
+            } else {
+                println!("-------------------------------------------------------------\n");
+                println!("Query successful: VFT/{}", user_query[1]);
+            }
+        }
+        _ => println!("Invalid query")
+    }
+}
+
+fn main() {
+    //println!("Printing entire Blockchain for debugging purposes:\n{:#?}", get_blockchain())
+
+    loop {
+        query_data()
+    }
 }
