@@ -1,4 +1,6 @@
 use std::io;
+use std::fs::File;
+use std::io::Write;
 
 #[derive(Debug)]
 struct VFT {
@@ -110,6 +112,19 @@ fn query_data() {
             println!("{:#?}", get_blockchain());
             println!("-------------------------------------------------------------");
             println!("Query successful");
+        }
+        "export" => {
+            let _dir = std::fs::create_dir("./VFTs");
+
+            for folder in get_blockchain().folders {
+                for vft in folder.vfts {
+                    println!("Exporting VFT \"{}\" from folder \"{}\"", vft.display_name, folder.name);
+
+                    let write_data = format!("{{\n    \"display_name\": \"{}\",\n    \"id\": \"{}\",\n    \"folder\": \"{}\",\n    \"file_path\": \"{}\",\n    \"crypto_cost\": {}\n}}", vft.display_name, vft.id, folder.name, vft.file_path, vft.crypto_cost);
+                    let mut file = File::create(format!("./VFTs/{}.json", vft.id)).expect("Unable to create file");
+                    file.write_all(write_data.as_bytes()).expect("Unable to write data");
+                }
+            }
         }
         _ => println!("Invalid query")
     }
