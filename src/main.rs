@@ -4,7 +4,7 @@ use std::io;
 struct VFT {
     display_name: String,
     id: String,
-    image_path: String,
+    file_path: String,
     crypto_cost: f32
 }
 
@@ -13,7 +13,7 @@ impl Default for VFT {
         VFT {
             display_name: String::from("Boring default name"),
             id: String::from("default_id"),
-            image_path: String::from("boring_default_image_path.png"),
+            file_path: String::from("boring_default_image_path.png"),
             crypto_cost: 100.1
         }
     }
@@ -31,28 +31,17 @@ struct Blockchain { // TODO: Think of better name for this
 }
 
 fn get_blockchain() -> Blockchain {
-    // TODO: Change to Blockchain new name
+    // TODO: Change to Blockchain new name and folder new name
     let blockchain : Blockchain = Blockchain {
         folders: vec![
             Folder {
-                name: String::from("wa"),
+                name: String::from("images"),
                 vfts: vec![
                     VFT {
-                        display_name: String::from("Test VFT"),
-                        id: String::from("test_vft"),
-                        image_path: String::from("test.png"),
-                        crypto_cost: 20.1
-                    },
-                    VFT {
-                        ..Default::default()
-                    }
-                ]
-            },
-            Folder {
-                name: String::from("woo"),
-                vfts: vec![
-                    VFT {
-                        ..Default::default()
+                        display_name: String::from("Shrek my beloved"),
+                        id: String::from("shrek"),
+                        file_path: String::from("shrek.jpg"),
+                        crypto_cost: 20000.
                     }
                 ]
             }
@@ -103,7 +92,7 @@ fn query_data() {
                     if vft.id == user_query[1] {
                         success = true;
                         println!("\n-------------------------------------------------------------");
-                        println!("RootFolder:   \"{}\" \nDisplayName:  \"{}\" \nID:           \"{}\" \nImagePath:    \"{}\" \nCryptoCost:   \"{}\"", folder.name, vft.display_name, vft.id, vft.image_path, vft.crypto_cost);
+                        println!("RootFolder:   \"{}\" \nDisplayName:  \"{}\" \nID:           \"{}\" \nFilePath:     \"{}\" \nCryptoCost:   \"{}\"", folder.name, vft.display_name, vft.id, vft.file_path, vft.crypto_cost);
                     }
                 }
             }
