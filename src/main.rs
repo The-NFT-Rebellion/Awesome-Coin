@@ -114,14 +114,14 @@ fn query_data() {
             println!("Query successful");
         }
         "export" => {
-            let _dir = std::fs::create_dir("./VFTs");
+            let _dir = std::fs::create_dir("./vfts");
 
             for drawer in get_cubelink().drawers {
                 for vft in drawer.vfts {
                     println!("Exporting VFT \"{}\" from Drawer \"{}\"", vft.display_name, drawer.name);
 
-                    let write_data = format!("{{\n    \"display_name\": \"{}\",\n    \"id\": \"{}\",\n    \"Drawer\": \"{}\",\n    \"file_path\": \"{}\",\n    \"crypto_cost\": {}\n}}", vft.display_name, vft.id, drawer.name, vft.file_path, vft.crypto_cost);
-                    let mut file = File::create(format!("./VFTs/{}.json", vft.id)).expect("Unable to create file");
+                    let write_data = format!("{{ \"display_name\": \"{}\", \"id\": \"{}\", \"Drawer\": \"{}\", \"file_path\": \"{}\", \"crypto_cost\": {} }}", vft.display_name, vft.id, drawer.name, vft.file_path, vft.crypto_cost);
+                    let mut file = File::create(format!("./vfts/{}.json", vft.id)).expect("Unable to create file");
                     file.write_all(write_data.as_bytes()).expect("Unable to write data");
                 }
             }
