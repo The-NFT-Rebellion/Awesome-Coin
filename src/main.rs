@@ -120,8 +120,8 @@ fn query_data() {
                 for vft in drawer.vfts {
                     println!("Exporting VFT \"{}\" from Drawer \"{}\"", vft.display_name, drawer.name);
 
-                    let write_data = format!("{{ \"display_name\": \"{}\", \"id\": \"{}\", \"Drawer\": \"{}\", \"file_path\": \"{}\", \"crypto_cost\": {} }}", vft.display_name, vft.id, drawer.name, vft.file_path, vft.crypto_cost);
-                    let mut file = File::create(format!("./vfts/{}.json", vft.id)).expect("Unable to create file");
+                    let write_data = format!("display_name:{},id:{},drawer:{},file_path:{},crypto_cost:{}", vft.display_name, vft.id, drawer.name, vft.file_path, vft.crypto_cost);
+                    let mut file = File::create(format!("./vfts/{}.vft", vft.id)).expect("Unable to create file");
                     file.write_all(write_data.as_bytes()).expect("Unable to write data");
                 }
             }
