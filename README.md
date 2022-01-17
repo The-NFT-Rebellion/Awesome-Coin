@@ -1,2 +1,2 @@
-# VFT Distributor
-Very fungible Tokens
+# Awesome Coin
+the best coin
