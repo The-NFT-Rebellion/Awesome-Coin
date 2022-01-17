@@ -22,21 +22,21 @@ impl Default for VFT {
 }
 
 #[derive(Debug)]
-struct Folder { // TODO: Think of better name for this
+struct Drawer { // TODO: Think of better name for this
     name: String,
     vfts: Vec<VFT>
 }
 
 #[derive(Debug)]
-struct Blockchain { // TODO: Think of better name for this
-    folders: Vec<Folder>
+struct Cubelink { // TODO: Think of better name for this
+    drawers: Vec<Drawer>
 }
 
-fn get_blockchain() -> Blockchain {
-    // TODO: Change to Blockchain new name and folder new name
-    let blockchain : Blockchain = Blockchain {
-        folders: vec![
-            Folder {
+fn get_cubelink() -> Cubelink {
+    // TODO: Change to Cubelink new name and Drawer new name
+    let cubelink : Cubelink = Cubelink {
+        drawers: vec![
+            Drawer {
                 name: String::from("images"),
                 vfts: vec![
                     VFT {
@@ -50,7 +50,7 @@ fn get_blockchain() -> Blockchain {
         ]
     };
 
-    return blockchain
+    return cubelink
 }
 
 fn query_data() {
@@ -66,35 +66,35 @@ fn query_data() {
 
     //println!("{}", input)
     match user_query[0] {
-        "folder" => {
-            println!("Querying folder: {}", user_query[1]);
+        "drawer" => {
+            println!("Querying Drawer: {}", user_query[1]);
             
             let mut success = false;
-            for folder in get_blockchain().folders {
-                if folder.name == user_query[1] {
+            for drawer in get_cubelink().drawers {
+                if drawer.name == user_query[1] {
                     success = true;
                     println!("\n-------------------------------------------------------------");
-                    println!("{:#?}", folder);
+                    println!("{:#?}", drawer);
                 }
             }
 
             if success == false {
-                println!("Folder Query failed")
+                println!("Drawer Query failed")
             } else {
                 println!("-------------------------------------------------------------\n");
-                println!("Query successful: folder/{}", user_query[1]);
+                println!("Query successful: Drawer/{}", user_query[1]);
             }
         }
         "vft" => {
             println!("Querying VFT: {}", user_query[1]);
 
             let mut success = false;
-            for folder in get_blockchain().folders {
-                for vft in folder.vfts {
+            for drawer in get_cubelink().drawers {
+                for vft in drawer.vfts {
                     if vft.id == user_query[1] {
                         success = true;
                         println!("\n-------------------------------------------------------------");
-                        println!("RootFolder:   \"{}\" \nDisplayName:  \"{}\" \nID:           \"{}\" \nFilePath:     \"{}\" \nCryptoCost:   \"{}\"", folder.name, vft.display_name, vft.id, vft.file_path, vft.crypto_cost);
+                        println!("RootDrawer:   \"{}\" \nDisplayName:  \"{}\" \nID:           \"{}\" \nFilePath:     \"{}\" \nCryptoCost:   \"{}\"", drawer.name, vft.display_name, vft.id, vft.file_path, vft.crypto_cost);
                     }
                 }
             }
@@ -107,20 +107,20 @@ fn query_data() {
             }
         }
         "all" => {
-            println!("Querying all Blockchain data");
+            println!("Querying all Cubelink data");
             println!("-------------------------------------------------------------");
-            println!("{:#?}", get_blockchain());
+            println!("{:#?}", get_cubelink());
             println!("-------------------------------------------------------------");
             println!("Query successful");
         }
         "export" => {
             let _dir = std::fs::create_dir("./VFTs");
 
-            for folder in get_blockchain().folders {
-                for vft in folder.vfts {
-                    println!("Exporting VFT \"{}\" from folder \"{}\"", vft.display_name, folder.name);
+            for drawer in get_cubelink().drawers {
+                for vft in drawer.vfts {
+                    println!("Exporting VFT \"{}\" from Drawer \"{}\"", vft.display_name, drawer.name);
 
-                    let write_data = format!("{{\n    \"display_name\": \"{}\",\n    \"id\": \"{}\",\n    \"folder\": \"{}\",\n    \"file_path\": \"{}\",\n    \"crypto_cost\": {}\n}}", vft.display_name, vft.id, folder.name, vft.file_path, vft.crypto_cost);
+                    let write_data = format!("{{\n    \"display_name\": \"{}\",\n    \"id\": \"{}\",\n    \"Drawer\": \"{}\",\n    \"file_path\": \"{}\",\n    \"crypto_cost\": {}\n}}", vft.display_name, vft.id, drawer.name, vft.file_path, vft.crypto_cost);
                     let mut file = File::create(format!("./VFTs/{}.json", vft.id)).expect("Unable to create file");
                     file.write_all(write_data.as_bytes()).expect("Unable to write data");
                 }
@@ -131,7 +131,7 @@ fn query_data() {
 }
 
 fn main() {
-    //println!("Printing entire Blockchain for debugging purposes:\n{:#?}", get_blockchain())
+    //println!("Printing entire Cubelink for debugging purposes:\n{:#?}", get_Cubelink())
 
     loop {
         query_data()
