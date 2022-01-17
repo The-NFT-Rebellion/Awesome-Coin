@@ -44,6 +44,12 @@ fn get_cubelink() -> Cubelink {
                         id: String::from("shrek"),
                         file_path: String::from("shrek.jpg"),
                         crypto_cost: 20000.
+                    },
+                    VFT {
+                        display_name: String::from("Kirbo"),
+                        id: String::from("kirbo"),
+                        file_path: String::from("kirbo.png"),
+                        crypto_cost: 999999999.
                     }
                 ]
             }
